@@ -1,4 +1,5 @@
 import com.trivago.mp.casestudy.DateRange;
+import com.trivago.mp.casestudy.Hotel;
 import com.trivago.mp.casestudy.HotelSearchEngine;
 import com.trivago.mp.casestudy.HotelSearchEngineImpl;
 import com.trivago.mp.casestudy.HotelWithOffers;
@@ -17,7 +18,9 @@ import java.util.Set;
 
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class HotelSearchEngineTest {
     final Random random = new Random(42);
@@ -31,6 +34,20 @@ public class HotelSearchEngineTest {
         }
         return result;
     };
+
+    @Test
+    public void testLoadData() {
+        HotelSearchEngine hotelSearchEngine = new HotelSearchEngineImpl();
+
+        try {
+            List<Hotel> loadData = (List<Hotel>) ((HotelSearchEngineImpl) hotelSearchEngine).loadData(HotelSearchEngineImpl.Hotels.class);
+            assertNotNull(loadData);
+            assertEquals(554, loadData.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
 
     @Test
     public void testNoException() {
